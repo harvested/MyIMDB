@@ -67,8 +67,11 @@ sub search {
 				}
 			}
 		}
+
 		
 		$return_result{movies} = \@movies;	
+
+    #warn Dumper(\%return_result);
 				
 		$self->stash (return_result => \%return_result);
 	}
