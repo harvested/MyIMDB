@@ -1,0 +1,93 @@
+{
+   "abstract" : "test tets",
+   "author" : [
+      "unknown"
+   ],
+   "dynamic_config" : 1,
+   "generated_by" : "Module::Build version 0.4231",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : 2
+   },
+   "name" : "MyIMDB",
+   "prereqs" : {
+      "configure" : {
+         "requires" : {
+            "Module::Build" : "0.42"
+         }
+      }
+   },
+   "provides" : {
+      "MyIMDB" : {
+         "file" : "lib/MyIMDB.pm"
+      },
+      "MyIMDB::Actor" : {
+         "file" : "lib/MyIMDB/Actor.pm"
+      },
+      "MyIMDB::Admins" : {
+         "file" : "lib/MyIMDB/Admins.pm"
+      },
+      "MyIMDB::Basket" : {
+         "file" : "lib/MyIMDB/Basket.pm"
+      },
+      "MyIMDB::Models::Actor" : {
+         "file" : "lib/MyIMDB/Models/Actor.pm"
+      },
+      "MyIMDB::Models::Base" : {
+         "file" : "lib/MyIMDB/Models/Base.pm"
+      },
+      "MyIMDB::Models::Genres" : {
+         "file" : "lib/MyIMDB/Models/Genres.pm"
+      },
+      "MyIMDB::Models::Movie" : {
+         "file" : "lib/MyIMDB/Models/Movie.pm"
+      },
+      "MyIMDB::Models::MovieGenres" : {
+         "file" : "lib/MyIMDB/Models/MovieGenres.pm"
+      },
+      "MyIMDB::Models::MoviesUsersComments" : {
+         "file" : "lib/MyIMDB/Models/MoviesUsersComments.pm"
+      },
+      "MyIMDB::Models::Object" : {
+         "file" : "lib/MyIMDB/Models/Object.pm"
+      },
+      "MyIMDB::Models::UserRoleTypes" : {
+         "file" : "lib/MyIMDB/Models/UserRoleTypes.pm"
+      },
+      "MyIMDB::Models::Users" : {
+         "file" : "lib/MyIMDB/Models/Users.pm"
+      },
+      "MyIMDB::Models::UsersActors" : {
+         "file" : "lib/MyIMDB/Models/UsersActors.pm"
+      },
+      "MyIMDB::Models::UsersMovies" : {
+         "file" : "lib/MyIMDB/Models/UsersMovies.pm"
+      },
+      "MyIMDB::Movie" : {
+         "file" : "lib/MyIMDB/Movie.pm"
+      },
+      "MyIMDB::Movie::Manager" : {
+         "file" : "lib/MyIMDB/Movie/Manager.pm"
+      },
+      "MyIMDB::Search" : {
+         "file" : "lib/MyIMDB/Search.pm"
+      },
+      "MyIMDB::Users" : {
+         "file" : "lib/MyIMDB/Users.pm"
+      },
+      "UserRoles" : {
+         "file" : "lib/MyIMDB/Models/UserRoles.pm"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "license" : [
+         "http://dev.perl.org/licenses/"
+      ]
+   },
+   "version" : 0,
+   "x_serialization_backend" : "JSON::PP version 4.06"
+}
