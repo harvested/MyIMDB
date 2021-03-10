@@ -13,7 +13,7 @@ sub startup {
 
     # Routes
     my $r = $self->routes;
-  
+
     # Normal route to controller
     # Home page routes
     $r->get('/')->to('search#home');
@@ -28,14 +28,13 @@ sub startup {
     $r->get('/join')->to( template => 'users/join' );
     $r->post('/join')->to('users#join');
 
-
-    $r->get('/actor/:id')->to('actor#details');
     
-    # Actors routes
-    # my $actor = $r->get('/actor/:id')->to(controller => 'actor');
-    my $actor = $r->get('/actor/:id')->to('actor#details');
-    # my $actor = $r->get('/actor/:id')->to('actor#details');
-    # $actor->get('/')->to(action => 'details');
+    # MyIMDB::Actor routes
+    my $actor = $r->get('/actor/')->to(controller => 'actor');
+    $actor->get('/<id:num>')
+          ->to(action => 'details_by_id');
+    $actor->get('/:name' => [name => qr/[a-zA-Z]+/])
+          ->to(action => 'details_by_name');
 
     # we create an routing bridge (Mojo 6: under) to check if the user is logged in or not
     $actor->under('/')->to('users#auth')->post('/mark')->to('actors#markFavorite');

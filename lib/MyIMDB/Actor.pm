@@ -15,7 +15,6 @@ sub search {
             last_name => {like => "%$query%"},
         ],
     );
-
     my $actors = [];
     @$actors = map { 
         { 
@@ -24,37 +23,32 @@ sub search {
             date_of_birth => $_->date_of_birth,
         } 
     } @$found_actors;
-    
     return $actors;
 }
 
 
 sub list {
 	my $self = shift;
-
 	my @list = MyIMDB::Models::Actors->retrieve_all;
-
 	$self->render(objs => \@list);
 }
 
-sub details {
+sub details_by_id {
 	my $self = shift;
-
 	my $actor_id = $self->param('id');
-
-	if( $actor_id !~ /\d+/ ){
-		return $self->redirect_to('/404');
-	}
 
 	my $actor = MyIMDB::Models::Actor->new(actor_id => $actor_id);
 	$actor->load;
 
-	if( $self->session('name') ){
+	if($self->session('name')){
 	    my $user_name = $self->session('name');
 	    my $user = MyIMDB::Models::Users->retrieve( name => $user_name );
 	    my $user_id = $user->id();
 			 
-		my %search_keys = ( user_id => $user_id, actor_id => $actor_id );
+		my %search_keys = (
+			user_id => $user_id,
+			actor_id => $actor_id,
+		);
 		my $user_actor = MyIMDB::Models::UsersActors->retrieve( %search_keys );
 
 	 	if( $user_actor ) {
@@ -65,8 +59,21 @@ sub details {
 			}
        }
 	}
-	
-	$self->render(actor => $actor);
+	$self->render(template => 'actor/details', actor => $actor);
+}
+
+sub details_by_name {
+	my $self = shift;
+	my $name = $self->param('name');
+   	
+   	my $found_actors = MyIMDB::Models::Actor::Manager->get_actors(
+        query => [
+            last_name => {like => "%$name%"},
+            # or => [ first_name => {like => "%$name%"} ],
+        ],
+    );
+
+	$self->render(template => 'actor/details', actor => $found_actors);
 }
 
 sub markFavorite {
@@ -90,7 +97,6 @@ sub markFavorite {
 		$user_actor->favorited('y');
 		$user_actor->update();
 	}
-	
 	$self->redirect_to( "actors/$actor_id" );
 }
 
