@@ -12,6 +12,12 @@ use Data::Dump qw/dump/;
 #use MyIMDB::Models::Genres;
 #use MyIMDB::Models::MoviesGenres;
 
+my $SEARCH_QUERY = {
+	actors => 'MyIMDB::Actor',
+	movies => 'MyIMDB::Movies',
+	genres => 'MyIMDB::Models::Genres',
+};
+
 sub home {
 	my $self = shift;
     
@@ -23,6 +29,10 @@ sub search {
     
     my $search_query = $self->param('search');
     my $search_type = $self->param('type');
+
+    my $type = $SEARCH_QUERY->{$search_type};
+
+    # dump $type;exit;
 	
     my $search_result;
     my @search_result;
@@ -38,13 +48,13 @@ sub search {
     } elsif( $search_type =~ /genres/ ){
 		
 		#search for the genre_id in the Genres table
-		@genres = MyIMDB::Models::Genres->search_like( genre => "%$search_query%" );
+		@genres = MyIMDB::Models::Genres->search_like(genre => "%$search_query%");
 		
 		foreach my $genre ( @genres ){
 			my $genre_id = $genre->id();
 
 			#iterate over the joining table to get every movie_id for that genre
-			my $it = MyIMDB::Models::MoviesGenres->search_like( genre_id => "$genre_id" );
+			my $it = MyIMDB::Models::MoviesGenres->search_like(genre_id => "$genre_id");
 
 			eval {
 				while( my $mv = $it->next) {

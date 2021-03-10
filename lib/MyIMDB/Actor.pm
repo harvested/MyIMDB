@@ -11,9 +11,8 @@ sub search {
 
     # TODO split $query 
     my $found_actors = MyIMDB::Models::Actor::Manager->get_actors(
-        query =>
-        [
-            last_name => { like => "%$query%" },
+        query => [
+            last_name => {like => "%$query%"},
         ],
     );
 
@@ -35,7 +34,6 @@ sub list {
 
 	my @list = MyIMDB::Models::Actors->retrieve_all;
 
-
 	$self->render(objs => \@list);
 }
 
@@ -48,7 +46,8 @@ sub details {
 		return $self->redirect_to('/404');
 	}
 
-	my $actor = MyIMDB::Models::Actors->retrieve($actor_id);
+	my $actor = MyIMDB::Models::Actor->new(actor_id => $actor_id);
+	$actor->load;
 
 	if( $self->session('name') ){
 	    my $user_name = $self->session('name');

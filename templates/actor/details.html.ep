@@ -2,10 +2,10 @@
 % title 'Actor Details';
 
 
-<h2><%= $actor->name() %> </h2>
+<h2><%= $actor->first_name %> </h2>
 
-Name: <%= $actor->name() %> </br> 
-Birth date: <%= $actor->bdate() %>
+Name: <%= $actor->first_name %> </br> 
+Birth date: <%= $actor->date_of_birth %>
 <br/><br/>
 
 % my $user_name;
