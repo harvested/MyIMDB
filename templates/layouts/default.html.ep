@@ -1,31 +1,44 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link type="text/css" rel="stylesheet" href="/css/styles.css">
+
+	   	<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- <link type="text/css" rel="stylesheet" href="/css/styles.css"> -->
+
 		<title>
 			<%= title %>
 		</title>
+
+	 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 	</head>
 	<body>
-		<section id="wrapper">
-		<h1>My::IMDB</h1>
-			<nav>
-				<ul>
-					% if( session('name') ){
-						<li><a href='/'>Search</a></li>
-						<li><a href='/user/<%= session('name') %>'>Homepage</a></li>
-						<li><a href='/logout'>Sign-Out</a></li>
-						<li><a href='/basket/view'>Basket</a></li>
-					% } else {
-						<li><a href='/'>Home</a></li>
-						<li><a href='/login'>Sign-In</a></li>
-						<li><a href='/join'>Join us</a></li>
-					% }
-				</ul>
-			</nav><!--end:nav-->
-	  	<div id="container">
-	  	 	 <%= content %>
-	 	</div>
+		<section class="container">
+			<div class="container">
+				<h1>My::IMDB</h1>
+				<div class="row">
+					
+							% if( session('name') ){
+								<div class="col-lg">
+									<a href='/'>Search</a>
+									<a href='/user/<%= session('name') %>'>Homepage</a>
+									<a href='/logout'>Sign-Out</a>
+									<a href='/basket/view'>Basket</a>
+								</div>	
+							% } else {
+							<div class="col-lg">
+								<a href='/'>Home</a>
+								<a href='/login'>Sign-In</a>
+								<a href='/join'>Join us</a>
+							</div>								
+							% }
+				</div>
+			</div>
+		  	<div class="container">
+		  	 	 <%= content %>
+		 	</div>
 		</section><!--end:wrapper-->
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
   	</body>
 </html>

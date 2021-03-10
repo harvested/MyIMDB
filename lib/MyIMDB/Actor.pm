@@ -3,7 +3,7 @@ package MyIMDB::Actor;
 use Mojo::Base 'Mojolicious::Controller';
 use MyIMDB::Models::Actor;
 
-use DDP;
+# use DDP;
 use Data::Dump qw/dump/;
 
 sub search {

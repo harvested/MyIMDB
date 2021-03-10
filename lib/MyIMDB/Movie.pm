@@ -3,7 +3,7 @@ use Mojo::Base 'Mojolicious::Controller';
 
 use MyIMDB::Models::Movie;
 use Data::Dumper;
-use DDP;
+# use DDP;
 use Data::Dump qw/dump/;
 
 # define attributes

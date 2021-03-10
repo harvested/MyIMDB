@@ -7,7 +7,7 @@ use MyIMDB::Movie;
 use MyIMDB::Movie::Manager;
 
 use Data::Dump qw/dump/;
-use DDP;
+# use DDP;
 
 #use MyIMDB::Models::Genres;
 #use MyIMDB::Models::MoviesGenres;
