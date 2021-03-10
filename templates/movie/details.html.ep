@@ -9,7 +9,7 @@
 	<tr><td>Rating: </td><td> <%= $movie->{rating} %> </td></tr>
 </table>
 <br/>
-<a href='/movies/<%= $movie->id %>/buy'>Buy</a>
+<a href='/movies/<%= $movie->movie_id %>/buy'>Buy</a>
 <br/>
 
 % my $user_name;
@@ -41,17 +41,18 @@
 	% end
 % } 
 </br>
-% if( scalar($movie->users_comments) > 0  ){
+
+%# if( scalar($movie->users_comments) > 0  ){
 	Comments
 	<ul>
-	% foreach( $movie->users_comments ){
-		% my $name = $_->user_id->name;
-		<li><%= link_to url_for($name)->url_unescape => "/user/$name" %> : <%= $_->comment %></li> 
-	% }
+	%# foreach( $movie->users_comments ){
+		%# my $name = $_->user_id->name;
+%#		<li><%= link_to url_for($name)->url_unescape => "/user/$name" %> : <%= $_->comment %></li> 
+	%# }
 	</ul>
-% } else {
+%# } else {
 	Be the first to comment!
-% }
+%# }
 
 % if( $user_name ){
 	Leave a comment:

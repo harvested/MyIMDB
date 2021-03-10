@@ -43,25 +43,22 @@ sub search {
     return $movies;
 }
 
-sub details {
+sub details_by_id {
 	my $self = shift;
-
 	my $movie_id = $self->param('id');
 
-	if( $movie_id !~ /\d+/ ){
-		return $self->redirect_to('/404');
-	}
 
-	my $movie = MyIMDB::Models::Movies->retrieve($movie_id);
+	my $movie = MyIMDB::Models::Movie->new(movie_id => $movie_id);
+	$movie->load;
 
-	my $rating = $movie->rating();
+	my $rating = $movie->rating;
 
 	# the key $movie->{rating} contains the total rating for this movie
-	if( $rating == 0 ){
-		$movie->{rating} = "No ratings yet";
-	} else { 
-		$movie->{rating} = $rating;
-	}
+	# if( $rating == 0 ){
+	# 	$movie->{rating} = "No ratings yet";
+	# } else { 
+	# 	$movie->{rating} = $rating;
+	# }
 
 	if( $self->session('name') ){
 		my $user_name = $self->session('name');
@@ -86,7 +83,7 @@ sub details {
 		}
 	}
 
-	$self->stash( movie => $movie );
+	$self->render(template => 'movie/details', movie => $movie);
 }
 
 sub setRate {

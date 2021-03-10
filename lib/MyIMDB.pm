@@ -1,8 +1,6 @@
 package MyIMDB;
 
 use Mojo::Base 'Mojolicious';
-use Data::Dump qw/dump/;
-
 
 # This method will run once at server start
 sub startup {
@@ -19,18 +17,19 @@ sub startup {
     $r->get('/')->to('search#home');
     $r->get('/search')->to('search#search');
 
-    # Login and logout routes
-    $r->get('/login')->to( template => 'users/login' );
+    # User Login and logout routes
+    # my $user = $r->get('/user')->to(controller => 'user');
+    $r->get('/login')->to(template => 'users/login');
     $r->post('/login')->to('users#login');
     $r->get('/logout')->to('users#logout');
 
-    # Join routes
+    # User Join routes
     $r->get('/join')->to( template => 'users/join' );
     $r->post('/join')->to('users#join');
-
     
     # MyIMDB::Actor routes
-    my $actor = $r->get('/actor/')->to(controller => 'actor');
+    my $actor = $r->get('/actor/')
+                  ->to(controller => 'actor');
     $actor->get('/<id:num>')
           ->to(action => 'details_by_id');
     $actor->get('/:name' => [name => qr/[a-zA-Z]+/])
@@ -39,9 +38,9 @@ sub startup {
     # we create an routing bridge (Mojo 6: under) to check if the user is logged in or not
     $actor->under('/')->to('users#auth')->post('/mark')->to('actors#markFavorite');
 
-    # Movies routes
-    my $movie = $r->get('/movies/:id')->to(controller => 'movies');
-    $movie->get('/')->to(action => 'details');
+    # MyIMDB::Movies routes
+    my $movie = $r->get('/movie/<id:num>')->to(controller => 'movie');
+    $movie->get('/')->to(action => 'details_by_id');
     $movie->get('/buy')->to('basket#buyMovie');
 
     $movie->under('/')->to('users#auth')->post('/rate')->to('movies#setRate');
