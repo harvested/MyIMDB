@@ -1,6 +1,5 @@
 package MyIMDB::Movie;
 use Mojo::Base 'Mojolicious::Controller';
-
 use MyIMDB::Models::Movie;
 use Data::Dumper;
 # use DDP;
@@ -9,39 +8,6 @@ use Data::Dump qw/dump/;
 # define attributes
 # there are also accessor methods
 has [qw/name launch_date rating/];
-
-sub search {
-    my ($self, $query) = @_;
-   
-    my $found_movies = MyIMDB::Models::Movie::Manager->get_movies(
-        query =>
-        [
-            name => { like => "%$query%" },
-        ],
-    );
- 
-    my $movies = [];
-
-#   version 1
-#   foreach my $movie (@$found_movies) {
-#       my $current = { 
-#           name        => $movie->name,
-#           launch_date => $movie->launch_date,
-#           rating      => $movie->rating,
-#       };
-#       push @$movies, $current;
-#   };
-
-    # version 2
-    @{$movies}  = map { 
-        { name        => $_->name,
-          launch_date => $_->launch_date,
-          rating      => $_->rating,
-        }
-    } @$found_movies;
-    
-    return $movies;
-}
 
 sub details_by_id {
 	my $self = shift;
@@ -62,10 +28,10 @@ sub details_by_id {
 
 	if( $self->session('name') ){
 		my $user_name = $self->session('name');
-		my $user = MyIMDB::Models::Users->retrieve( name => $user_name );
+		my $user = MyIMDB::Models::Users->retrieve(name => $user_name);
 		my $user_id = $user->id();
 
-		my %search_keys = ( user_id => $user_id, movie_id => $movie_id );
+		my %search_keys = (user_id => $user_id, movie_id => $movie_id);
 		my $user_movie = MyIMDB::Models::UsersMovies->retrieve( %search_keys );
 		
 		if( $user_movie ) {
@@ -83,18 +49,20 @@ sub details_by_id {
 		}
 	}
 
-	$self->render(template => 'movie/details', movie => $movie);
+	$self->render(
+		template => 'movie/details', 
+		movie => $movie,
+	);
 }
 
 sub setRate {
 	my $self = shift;
-
 	my $new_rating = $self->param('rating');
 	my $movie_id = $self->param('id');
 	my $user_name = $self->session('name');
 	
 	#get the user id based on the session name
-	my $user = MyIMDB::Models::Users->retrieve( name => $user_name );
+	my $user = MyIMDB::Models::Users->retrieve(name => $user_name);
 	my $user_id = $user->id();
 	
 	#retrieve existing movie rating
@@ -122,7 +90,7 @@ sub setRate {
 		$user_movie->update();
 	}
 
-	$self->redirect_to( "movies/$movie_id" );
+	$self->redirect_to("movies/$movie_id");
 }
 
 sub markFavorite {
@@ -145,7 +113,7 @@ sub markFavorite {
 		$user_movie->update();
 	}
 
-	$self->redirect_to( "movies/$movie_id" );
+	$self->redirect_to("movies/$movie_id");
 }
 
 sub comment {

@@ -1,8 +1,6 @@
 package MyIMDB::Models::Actor;
-
 use strict;
 use warnings;
-
 use base 'MyIMDB::Models::Object';
 
 __PACKAGE__->meta->setup(

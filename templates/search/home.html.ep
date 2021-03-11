@@ -1,19 +1,15 @@
 % layout 'default';
-% title 'Welome to MyIMD';
+% title 'Welome to MyIMDB';
 
 
 <div class="row">
-	    <div class="col-lg">
+	<div class="col-lg">
 %= form_for '/search' => (method => 'GET') => begin
-
-	%= text_field 'search' => (class => 'form-control')
-
+	%= text_field 'query' => (class => 'form-control')
 		%= select_field type => [[Actors => 'actors'], [Movies => 'movies'], [Genres => 'genres']] => (class => 'form-select')
-
 		%= submit_button 'Search' => (class => "btn btn-primary")
 % end 
 	</div>
-
 </div>
 
 
