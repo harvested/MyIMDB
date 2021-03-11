@@ -24,7 +24,7 @@ sub startup {
     $r->get('/logout')->to('users#logout');
 
     # User Join routes
-    $r->get('/join')->to( template => 'users/join' );
+    $r->get('/join')->to(template => 'users/join');
     $r->post('/join')->to('users#join');
     
     # MyIMDB::Actor routes
@@ -36,12 +36,18 @@ sub startup {
           ->to(action => 'details_by_name');
 
     # we create an routing bridge (Mojo 6: under) to check if the user is logged in or not
-    $actor->under('/')->to('users#auth')->post('/mark')->to('actors#markFavorite');
+    $actor->under('/')
+          ->to('users#auth')
+          ->post('/mark')
+          ->to('actors#markFavorite');
 
     # MyIMDB::Movies routes
-    my $movie = $r->get('/movie/<id:num>')->to(controller => 'movie');
-    $movie->get('/')->to(action => 'details_by_id');
-    $movie->get('/buy')->to('basket#buyMovie');
+    my $movie = $r->get('/movie/<id:num>')
+                  ->to(controller => 'movie');
+    $movie->get('/')
+          ->to(action => 'details_by_id');
+    $movie->get('/buy')
+          ->to('basket#buyMovie');
 
     $movie->under('/')->to('users#auth')->post('/rate')->to('movies#setRate');
     $movie->under('/')->to('users#auth')->post('/mark')->to('movies#markFavorite');
