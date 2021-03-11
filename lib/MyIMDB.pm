@@ -54,16 +54,24 @@ sub startup {
     $movie->under('/')->to('users#auth')->post('/comment')->to('movies#comment');
 
     # Users routes
-    $r->get('/user/#user_name')->to('users#home');
+    $r->get('/user/#user_name')
+      ->to('users#home');
 
     # Basket routes
-    my $basket = $r->get('/basket')->to(controller => 'basket');
-    $basket->get('/view')->to(action => 'view');
-    $basket->get('/update')->to(action => 'update');
-    $basket->get('/empty')->to(action => 'empty');
-    $basket->get('/delete/:id')->to(action => 'delete');
-    $basket->get('/checkout')->to(action => 'checkout');
-    $basket->get('/send')->to(action =>'sendEmail');
+    my $basket = $r->get('/basket')
+        ->to(controller => 'basket');
+    $basket->get('/view')
+           ->to(action => 'view');
+    $basket->get('/update')
+           ->to(action => 'update');
+    $basket->get('/empty')
+           ->to(action => 'empty');
+    $basket->get('/delete/<id:num>')
+           ->to(action => 'delete');
+    $basket->get('/checkout')
+           ->to(action => 'checkout');
+    $basket->get('/send')
+           ->to(action =>'sendEmail');
 
     # Admin routes
     $r->get('/admin/login')->to(template => 'admins/login');
