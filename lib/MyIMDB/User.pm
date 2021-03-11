@@ -1,11 +1,9 @@
-package MyIMDB::Users;
-
+package MyIMDB::User;
 use strict;
 use warnings;
-
 use base 'Mojolicious::Controller';
 use Mojo::ByteStream 'b';
-use MyIMDB::Models::Users;
+use MyIMDB::Models::User;
 
 use Data::Dumper;
 
@@ -24,7 +22,7 @@ sub home {
 	my @favorited_movies;
 	my @favorited_actors;
 
-	my $user = MyIMDB::Models::Users->retrieve( name => $user_name );
+	my $user = MyIMDB::Models::User->retrieve(name => $user_name);
 
 	#iterate through all the movies from users_movies table for this user
 	foreach( $user->movies ){
@@ -42,11 +40,13 @@ sub home {
 		}
 	}
 
-	$self->stash( user_name => $user_name,
-				  favorited_movies => \@favorited_movies,
-				  favorited_actors => \@favorited_actors,
+	$self->stash(user => $user);
+	
+	$self->render(
+		user_name => $user_name,
+		favorited_movies => \@favorited_movies,
+		favorited_actors => \@favorited_actors,
 	);
-		
 }
 
 # this method is used for login
@@ -55,14 +55,16 @@ sub home {
 sub login {
 	my $self = shift;
 	
-	#get username and password from template
-	my $user_name = $self->param('name');
-	if ( MyIMDB::Models::Users->sql_login_count->select_val($user_name, b($self->param('pwd'))->md5_sum) == 1 ){
-		$self->session( name => $user_name );
-		return $self->redirect_to( "/user/$user_name" );
-	}
+	# #get username and password from template
+	# my $user_name = $self->param('name');
+	# my $password = $self->param('pwd')
+
+	# if (MyIMDB::Models::Users->sql_login_count->select_val($user_name, b($password)->md5_sum) == 1 ){
+	# 	$self->session( name => $user_name );
+	# 	return $self->redirect_to( "/user/$user_name" );
+	# }
 				   
-	$self->stash( error => 1 );
+	# $self->stash( error => 1 );
 }
 
 # this method is called whenever we want to make sure a user is logged in or not
@@ -82,22 +84,24 @@ sub auth {
 # it just expires the session and redirects to home page
 sub logout {
 	my $self = shift;
-
-	$self->session( expires => 1 );
-
+	$self->session(expires => 1);
 	$self->redirect_to('/');
 }
 
 # this method is used to create new user accounts
 # it takes user name, password and email address 
 # as input parameters via POST request
-sub join {
+sub create_account {
 	my $self = shift;
 	my $user_name = $self->param('user_name');
-			 
+	my $password = $self->param('pwd');
+	my $retype_pwd = $self->param('re-pwd');
+	my $email_addr = $self->param('email');
+
 	#check if we already have a user with the same user name or email address
-	my $error = MyIMDB::Models::Users->validate( $user_name, $self->param('pwd'), $self->param('re-pwd'), $self->param('email') );
-	$self->stash( error => $error );
+	my $error = $self->validate($user_name, $password, $retype_pwd, $email_addr);
+	$self->flash(error => $error);
+	$self->redirect_to("/join");
 	return if $error;
 
 	#if not, we create a new user
@@ -108,8 +112,24 @@ sub join {
 	});
 						  
 	#auto-login the user
-	$self->session( name => $user_name );
+	$self->session(name => $user_name);
 	$self->redirect_to("/user/$user_name");
+}
+
+# basic validation
+# TO BE RE-IMPLEMENTED properly
+sub validate {
+	my ($self, $user, $pass, $pass2, $email) = @_;
+
+	return 'username field must not be blank' unless $user and length $user;
+	return 'password field must not be blank' unless $pass and length $pass;
+	return 'please re-type your password' unless $pass2 and length $pass2;
+	return 'passwords don\'t match' unless $pass eq $pass2;
+	return 'email field must not be blank' unless $email and length $email;
+	return 'not e valid email address, must be like \'name@service.domain\'' 
+		unless $email =~ /\w+@\w+\.\w+/i;
+
+	return 0;
 }
 
 1;

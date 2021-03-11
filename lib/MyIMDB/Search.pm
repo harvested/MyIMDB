@@ -38,7 +38,6 @@ sub search {
 	);
 }
 
-
 sub search_movies {
     my ($self, $query) = @_;
 
@@ -64,7 +63,7 @@ sub search_actors {
 
 sub search_genres {
 	my ($self, $query) = @_;
-	
+
 	return MyIMDB::Models::Genres::Manager->get_genres(
 		query => [
 			genre => { like => "%$query%"},

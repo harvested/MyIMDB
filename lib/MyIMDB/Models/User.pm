@@ -1,8 +1,6 @@
-package MyIMDB::Models::Users;
-
+package MyIMDB::Models::User;
 use strict;
 use warnings;
-
 use base 'MyIMDB::Models::Object';
 
 __PACKAGE__->meta->setup(
@@ -11,6 +9,9 @@ __PACKAGE__->meta->setup(
     pk_columns => 'user_id',
     unique_key => 'user_id',
 );
+
+__PACKAGE__->meta->make_manager_class('users');
+
 
 #__PACKAGE__->has_many( movies => 'MyIMDB::Models::UsersMovies' );
 #__PACKAGE__->has_many( actors => 'MyIMDB::Models::UsersActors' );
@@ -31,7 +32,7 @@ __PACKAGE__->meta->setup(
 
 # this query is called when the users wants to join
 # it checks if there is already a registered user with the same email
-_#_PACKAGE__->set_sql( email_count => qq{
+#_PACKAGE__->set_sql( email_count => qq{
 #		SELECT COUNT(*) FROM __TABLE__ WHERE email=?
 #});
 
@@ -41,8 +42,8 @@ sub validate {
 
 	return 'username field must not be blank' unless $user and length $user;
 	
-	return 'this user already exists'
-		if __PACKAGE__->sql_join_count->select_val($user)>0;
+	# return 'this user already exists'
+		# if __PACKAGE__->sql_join_count->select_val($user)>0;
 
 	return 'password field must not be blank' unless $pass and length $pass;
 	
@@ -55,8 +56,8 @@ sub validate {
 	return 'not e valid email address, must be like \'name@service.domain\'' 
 		unless $email =~ /\w+@\w+\.\w+/i;
 
-	return 'this email address is already registered'
-		if __PACKAGE__->sql_email_count->select_val($email)>0;
+	# return 'this email address is already registered'
+		# if __PACKAGE__->sql_email_count->select_val($email)>0;
 	
 	return;
 }

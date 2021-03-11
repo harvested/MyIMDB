@@ -12,22 +12,25 @@ sub startup {
     # Routes
     my $r = $self->routes;
 
-    # Normal route to controller
-    # Home page routes
-    $r->get('/')->to('search#home');
-    $r->get('/search')->to('search#search');
+    # MyIMDB::Search controller routes
+    my $search = $r->get('/')->to(controller => 'Search');
+    $search->get('/')->to(action => 'home');
+    $search->get('/search/:type/:query' => [type => ['actors', 'movies', 'genres']])
+           ->to('search#search');
+    $search->get('/search')->to('search#search');
+
 
     # User Login and logout routes
     # my $user = $r->get('/user')->to(controller => 'user');
-    $r->get('/login')->to(template => 'users/login');
-    $r->post('/login')->to('users#login');
-    $r->get('/logout')->to('users#logout');
+    $r->get('/login')->to(template => 'user/login');
+    $r->post('/login')->to('user#login');
+    $r->get('/logout')->to('user#logout');
 
     # User Join routes
-    $r->get('/join')->to(template => 'users/join');
-    $r->post('/join')->to('users#join');
+    $r->get('/join')->to(template => 'user/create_account');
+    $r->post('/join')->to('user#create_account');
     
-    # MyIMDB::Actor routes
+    # MyIMDB::Actor controller routes
     my $actor = $r->get('/actor/')
                   ->to(controller => 'actor');
     $actor->get('/<id:num>')
@@ -53,9 +56,10 @@ sub startup {
     $movie->under('/')->to('users#auth')->post('/mark')->to('movies#markFavorite');
     $movie->under('/')->to('users#auth')->post('/comment')->to('movies#comment');
 
-    # Users routes
-    $r->get('/user/#user_name')
-      ->to('users#home');
+    # MyIMD::User routes
+    my $user = $r->get('/user/')->to(controller => 'user');
+    $user->get('/user/#user_name')
+      ->to(action => 'home');
 
     # Basket routes
     my $basket = $r->get('/basket')

@@ -1,7 +1,7 @@
 % layout 'default';
 % title 'Join';
 
-% if (my $error = stash 'error') {
+% if (my $error = flash 'error') {
 	Sorry: <%= $error %>
 % }
 
