@@ -12,13 +12,13 @@ lib/MyIMDB/Models/MoviesUsersComments.pm
 lib/MyIMDB/Models/Object.pm
 lib/MyIMDB/Models/UserRoles.pm
 lib/MyIMDB/Models/UserRoleTypes.pm
-lib/MyIMDB/Models/Users.pm
+lib/MyIMDB/Models/User.pm
 lib/MyIMDB/Models/UsersActors.pm
 lib/MyIMDB/Models/UsersMovies.pm
 lib/MyIMDB/Movie.pm
 lib/MyIMDB/Movie/Manager.pm
 lib/MyIMDB/Search.pm
-lib/MyIMDB/Users.pm
+lib/MyIMDB/User.pm
 MANIFEST			This list of files
 MyIMDB.db
 MyIMDB.sql
@@ -31,8 +31,8 @@ t/000_configuration.t
 t/basic.t
 t/unit/000_Base.t
 t/unit/001_Object.t
-templates/actors/details.html.ep
-templates/actors/list.html.ep
+templates/actor/details.html.ep
+templates/actor/list.html.ep
 templates/admins/allUsers.html.ep
 templates/admins/home.html.ep
 templates/admins/login.html.ep
@@ -43,11 +43,11 @@ templates/errors/404.html.ep
 templates/example/welcome.html.ep
 templates/layouts/default.html.ep
 templates/layouts/home.html.ep
-templates/movies/details.html.ep
+templates/movie/details.html.ep
 templates/search/home.html.ep
 templates/search/search.html.ep
-templates/users/home.html.ep
-templates/users/join.html.ep
-templates/users/login.html.ep
-META.yml
+templates/user/home.html.ep
+templates/user/create_account.html.ep
+templates/user/login.html.ep
 META.json
+META.yml

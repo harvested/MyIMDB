@@ -1,5 +1,5 @@
 {
-   "abstract" : "test tets",
+   "abstract" : "A pet project that works as IMDB.com",
    "author" : [
       "unknown"
    ],
@@ -14,10 +14,16 @@
    },
    "name" : "MyIMDB",
    "prereqs" : {
+      "configure" : {
+         "requires" : {
+            "Module::Build" : 0.42
+         }
+      },
       "runtime" : {
          "requires" : {
             "Mojolicious" : "9.03",
-            "Rose::DB" : "0.783"
+            "Rose::DB" : "0.783",
+            "Rose::DB::Object" : "0.819"
          }
       }
    },
@@ -55,11 +61,11 @@
       "MyIMDB::Models::Object" : {
          "file" : "lib/MyIMDB/Models/Object.pm"
       },
+      "MyIMDB::Models::User" : {
+         "file" : "lib/MyIMDB/Models/User.pm"
+      },
       "MyIMDB::Models::UserRoleTypes" : {
          "file" : "lib/MyIMDB/Models/UserRoleTypes.pm"
-      },
-      "MyIMDB::Models::Users" : {
-         "file" : "lib/MyIMDB/Models/Users.pm"
       },
       "MyIMDB::Models::UsersActors" : {
          "file" : "lib/MyIMDB/Models/UsersActors.pm"
@@ -76,8 +82,8 @@
       "MyIMDB::Search" : {
          "file" : "lib/MyIMDB/Search.pm"
       },
-      "MyIMDB::Users" : {
-         "file" : "lib/MyIMDB/Users.pm"
+      "MyIMDB::User" : {
+         "file" : "lib/MyIMDB/User.pm"
       },
       "UserRoles" : {
          "file" : "lib/MyIMDB/Models/UserRoles.pm"
