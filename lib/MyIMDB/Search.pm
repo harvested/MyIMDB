@@ -2,17 +2,13 @@ package MyIMDB::Search;
 use Mojo::Base 'Mojolicious::Controller';
 use MyIMDB::Models::Actor;
 use MyIMDB::Models::Movie;
-
+use MyIMDB::Models::Genres;
 use Data::Dump qw/dump/;
-# use DDP;
-
-#use MyIMDB::Models::Genres;
-#use MyIMDB::Models::MoviesGenres;
 
 my $SEARCH_METHODS = {
 	actors => 'search_actors',
 	movies => 'search_movies',
-	genres => 'MyIMDB::Models::Genres',
+	genres => 'search_genres',
 };
 
 sub home {
@@ -31,26 +27,7 @@ sub search {
 	
     my $search_result;
     my @search_result;
-	my @movies;
-	my @genres;
-		
-	# 	#search for the genre_id in the Genres table
-	# 	@genres = MyIMDB::Models::Genres->search_like(genre => "%$search_query%");
-		
-	# 	foreach my $genre (@genres) {
-	# 		my $genre_id = $genre->id();
-
-	# 		#iterate over the joining table to get every movie_id for that genre
-	# 		my $it = MyIMDB::Models::MoviesGenres->search_like(genre_id => "$genre_id");
-
-	# 		eval {
-	# 			while (my $mv = $it->next) {
-	# 				my $movie = MyIMDB::Models::Movies->retrieve(%{$mv->movie_id});
-	# 				push @movies, $movie;
-	# 			}
-	# 		}
-	# 	}
-	# }
+    my (@movies, @genres);
 
 	$self->render( 
 		search_query => \$search_query,
@@ -64,20 +41,18 @@ sub search {
 
 sub search_movies {
     my ($self, $query) = @_;
-   
-    my $found_movies = MyIMDB::Models::Movie::Manager->get_movies(
+
+    return MyIMDB::Models::Movie::Manager->get_movies(
         query => [ 
         	name => { like => "%$query%" },
         ],
     );
-    
-    return $found_movies;
 }
 
 sub search_actors {
 	my ($self, $query) = @_;
 
-	my $found_actors = MyIMDB::Models::Actor::Manager->get_actors(
+	return MyIMDB::Models::Actor::Manager->get_actors(
 		 query => [ 
         	or => [
         		last_name => { like => "%$query%" },
@@ -85,8 +60,16 @@ sub search_actors {
         	]
         ],
 	);
+}
 
-	return $found_actors;
+sub search_genres {
+	my ($self, $query) = @_;
+	
+	return MyIMDB::Models::Genres::Manager->get_genres(
+		query => [
+			genre => { like => "%$query%"},
+		],
+	);
 }
 
 1;
