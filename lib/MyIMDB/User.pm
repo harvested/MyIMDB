@@ -71,8 +71,8 @@ sub login {
 sub auth {
 	my $self = shift;
 	
-	if( $self->session('name') ){
-			return 1;
+	if($self->session('name')){
+		return 1;
 	}
 
 	$self->flash(login => 'You have to login first');
@@ -105,12 +105,14 @@ sub create_account {
 	return if $error;
 
 	#if not, we create a new user
-	MyIMDB::Models::Users->insert({
-		name => $user_name,
-		pass => b($self->param('pwd'))->md5_sum,
+	my $user = MyIMDB::Models::User->new(
+		user_name => $user_name,
+		password => b($self->param('pwd'))->md5_sum,
 		email => $self->param('email')
-	});
-						  
+	);
+	$user->save;
+	
+	$self->session(loggedUser => $user);				 
 	#auto-login the user
 	$self->session(name => $user_name);
 	$self->redirect_to("/user/$user_name");
