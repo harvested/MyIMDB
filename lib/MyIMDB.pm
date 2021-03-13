@@ -40,7 +40,7 @@ sub startup {
 
     # we create an routing bridge (Mojo 6: under) to check if the user is logged in or not
     $actor->under('/')
-          ->to('users#auth')
+          ->to('users#is_logged')
           ->post('/mark')
           ->to('actors#markFavorite');
 
@@ -52,14 +52,15 @@ sub startup {
     $movie->get('/buy')
           ->to('basket#buyMovie');
 
-    $movie->under('/')->to('users#auth')->post('/rate')->to('movies#setRate');
-    $movie->under('/')->to('users#auth')->post('/mark')->to('movies#markFavorite');
-    $movie->under('/')->to('users#auth')->post('/comment')->to('movies#comment');
+    $movie->under('/')->to('users#is_logged')->post('/rate')->to('movies#setRate');
+    $movie->under('/')->to('users#is_logged')->post('/mark')->to('movies#markFavorite');
+    $movie->under('/')->to('users#is_logged')->post('/comment')->to('movies#comment');
 
     # MyIMD::User routes
-    my $user = $r->get('/user/')->to(controller => 'user');
-    $user->get('/user/#user_name')
-      ->to(action => 'home');
+    my $user = $r->get('/user/')
+                 ->to(controller => 'user');
+    $user->get('/<id:num>')
+         ->to(action => 'home');
 
     # Basket routes
     my $basket = $r->get('/basket')

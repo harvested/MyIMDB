@@ -1,5 +1,11 @@
 % layout 'default';
-% title "$user_name Home";
+% if (session('name')){
+	% title "$user_name Home";
+% }
+
+% if (flash ('error')) {
+	<div> <%= flash 'error' %></div>		
+% }
 
 % if( session('name') and session('name') eq $user_name ){
 	Hi, <%= session 'name' %>!</br>

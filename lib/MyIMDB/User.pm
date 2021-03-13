@@ -17,35 +17,45 @@ sub home {
 	# because visitors and also other loged users can 
 	# view this user's profiles
 	my $user_name = $self->param('user_name');
+	my $user_id = $self->param('id');
 
 	# these two arrays will contain object instances from movies and actors table
 	my @favorited_movies;
 	my @favorited_actors;
 
-	my $user = MyIMDB::Models::User->retrieve(name => $user_name);
-
-	#iterate through all the movies from users_movies table for this user
-	foreach( $user->movies ){
-		#if the movie is marked as favorited push the object into @favorited_movies 
-		if( $_->favorited ){
-			push( @favorited_movies, $_ );
-		}
+	my $user = MyIMDB::Models::User->new(user_id => $user_id);
+	my $result;
+	eval { $result = $user->load; };
+	my $template = 'user/home';
+	if ($@) {
+		$self->flash(error => "user doesn't exit");
+		$template = 'user/no_user';
 	}
+
+
+	# #iterate through all the movies from users_movies table for this user
+	# foreach ($user->movies) {
+	# 	#if the movie is marked as favorited push the object into @favorited_movies 
+	# 	if ($_->favorited) {
+	# 		push (@favorited_movies, $_);
+	# 	}
+	# }
 
 	#print Dumper( $user->actors );
 	#for favorited actors it's the same as for favorited movies	
-	foreach( $user->actors ){
-		if( $_->favorited ){
-			push( @favorited_actors, $_ );
-		}
-	}
+	# foreach( $user->actors ){
+	# 	if( $_->favorited ){
+	# 		push( @favorited_actors, $_ );
+	# 	}
+	# }
 
-	$self->stash(user => $user);
-	
+	$self->session(user => $user);
+	$self->session(name => $user->user_name);
 	$self->render(
 		user_name => $user_name,
 		favorited_movies => \@favorited_movies,
 		favorited_actors => \@favorited_actors,
+		template => $template,
 	);
 }
 
@@ -68,7 +78,7 @@ sub login {
 }
 
 # this method is called whenever we want to make sure a user is logged in or not
-sub auth {
+sub is_logged {
 	my $self = shift;
 	
 	if($self->session('name')){
@@ -115,7 +125,7 @@ sub create_account {
 	$self->session(loggedUser => $user);				 
 	#auto-login the user
 	$self->session(name => $user_name);
-	$self->redirect_to("/user/$user_name");
+	$self->redirect_to("/user/$user->user_id");
 }
 
 # basic validation

@@ -1,0 +1,9 @@
+% layout 'default';
+% title "No User";
+
+
+% if (flash ('error')) {
+	<div> <%= flash 'error' %></div>		
+% }
+
+<div>hrehrhehreh</div>
