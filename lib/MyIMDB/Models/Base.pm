@@ -1,9 +1,7 @@
 package MyIMDB::Models::Base;
-
 use strict;
 use warnings;
-
-use base qw(Rose::DB);
+use base 'Rose::DB';
 
 __PACKAGE__->use_private_registry;
 
