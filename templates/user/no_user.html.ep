@@ -6,4 +6,4 @@
 	<div> <%= flash 'error' %></div>		
 % }
 
-<div>hrehrhehreh</div>
+<div>in NO USER</div>

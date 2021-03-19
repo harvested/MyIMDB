@@ -26,10 +26,9 @@ sub home {
 	my $user = MyIMDB::Models::User->new(user_id => $user_id);
 	my $result;
 	eval { $result = $user->load; };
-	my $template = 'user/home';
 	if ($@) {
 		$self->flash(error => "user doesn't exit");
-		$template = 'user/no_user';
+		return $self->render(template => 'user/no_user');
 	}
 
 
@@ -55,7 +54,6 @@ sub home {
 		user_name => $user_name,
 		favorited_movies => \@favorited_movies,
 		favorited_actors => \@favorited_actors,
-		template => $template,
 	);
 }
 
