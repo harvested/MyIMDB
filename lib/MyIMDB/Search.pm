@@ -11,11 +11,7 @@ my $SEARCH_METHODS = {
 	genres => 'search_genres',
 };
 
-sub home {
-	my $self = shift;
-    
-	$self->render();
-}
+sub home { shift->render() };
 
 sub search {
 	my $self = shift;

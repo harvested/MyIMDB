@@ -12,12 +12,14 @@ sub startup {
     # Routes
     my $r = $self->routes;
 
+    $r->get('/' => sub { shift->redirect_to('search') });
+
     # MyIMDB::Search controller routes
-    my $search = $r->get('/')->to(controller => 'Search');
+    my $search = $r->get('/search')->to(controller => 'search');
     $search->get('/')->to(action => 'home');
-    $search->get('/search/:type/:query' => [type => ['actors', 'movies', 'genres']])
+    $search->get('/:type/:query' => [type => ['actors', 'movies', 'genres']])
            ->to('search#search');
-    $search->get('/search')->to('search#search');
+    $search->get('/results')->to('search#search');
 
 
     # User Login and logout routes
