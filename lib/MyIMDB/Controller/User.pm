@@ -1,4 +1,4 @@
-package MyIMDB::User;
+package MyIMDB::Controller::User;
 use strict;
 use warnings;
 use base 'Mojolicious::Controller';
@@ -10,7 +10,7 @@ use Data::Dumper;
 # this method is used to render users details, or homepage
 # it retrieves the username from the url
 # and cosntruct 2 arrays with users favorite movies and actors
-sub home {
+sub view_user {
 	my $self = shift;
 
 	# I'm gettin the user name from the URL 
@@ -99,7 +99,7 @@ sub logout {
 # this method is used to create new user accounts
 # it takes user name, password and email address 
 # as input parameters via POST request
-sub create_account {
+sub create_user {
 	my $self = shift;
 	my $user_name = $self->param('user_name');
 	my $password = $self->param('pwd');

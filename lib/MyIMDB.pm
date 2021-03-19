@@ -1,6 +1,6 @@
 package MyIMDB;
-
 use Mojo::Base 'Mojolicious';
+
 
 # This method will run once at server start
 sub startup {
@@ -27,8 +27,8 @@ sub startup {
     $r->get('/logout')->to('user#logout');
 
     # User Join routes
-    $r->get('/join')->to(template => 'user/create_account');
-    $r->post('/join')->to('user#create_account');
+    $r->get('/join')->to(template => 'user/create_user');
+    $r->post('/join')->to('user#create_user');
     
     # MyIMDB::Actor controller routes
     my $actor = $r->get('/actor/')
@@ -60,7 +60,7 @@ sub startup {
     my $user = $r->get('/user/')
                  ->to(controller => 'user');
     $user->get('/<id:num>')
-         ->to(action => 'home');
+         ->to(action => 'view_user');
 
     # Basket routes
     my $basket = $r->get('/basket')
