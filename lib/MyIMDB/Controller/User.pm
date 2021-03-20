@@ -1,7 +1,5 @@
 package MyIMDB::Controller::User;
-use strict;
-use warnings;
-use base 'Mojolicious::Controller';
+use Mojo::Base 'Mojolicious::Controller';
 use Mojo::ByteStream 'b';
 use MyIMDB::Models::User;
 
@@ -24,6 +22,19 @@ sub view_user {
 	my @favorited_actors;
 
 	my $user = MyIMDB::Models::User->new(user_id => $user_id);
+
+
+	# print Dumper $self->user_model;
+	# my $user = $self->user_model->new(user_id => $user_id);
+	# print Dumper $user;
+
+	# $user->load;
+
+	# print Dumper $user;
+	# print Dumper $user->user_id();
+	# print Dumper $user->first_name();
+	# print Dumper $user->user_name();
+
 	my $result;
 	eval { $result = $user->load; };
 	if ($@) {
