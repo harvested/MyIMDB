@@ -1,7 +1,6 @@
 package MyIMDB::Models::User;
-use strict;
-use warnings;
-use base 'MyIMDB::Models::Object';
+use Mojo::Base -strict;
+use parent 'MyIMDB::Models::Object';
 
 __PACKAGE__->meta->setup(
     table => 'users',
@@ -11,6 +10,11 @@ __PACKAGE__->meta->setup(
 );
 
 __PACKAGE__->meta->make_manager_class('users');
+
+# sub init_db {
+
+# 	return SUPER->new();
+# }
 
 
 #__PACKAGE__->has_many( movies => 'MyIMDB::Models::UsersMovies' );
