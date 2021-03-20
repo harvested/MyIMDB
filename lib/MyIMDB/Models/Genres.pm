@@ -1,7 +1,6 @@
 package MyIMDB::Models::Genres;
-use strict;
-use warnings;
-use base 'MyIMDB::Models::Object';
+use Mojo::Base -strict;
+use parent 'MyIMDB::Models::Object';
 
 __PACKAGE__->meta->setup(
     table      => 'genres',
