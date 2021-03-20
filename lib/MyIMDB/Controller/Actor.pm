@@ -1,5 +1,4 @@
 package MyIMDB::Actor;
-
 use Mojo::Base 'Mojolicious::Controller';
 use MyIMDB::Models::Actor;
 

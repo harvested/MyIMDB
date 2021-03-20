@@ -1,9 +1,5 @@
 package MyIMDB::Basket;
-
-use strict;
-use warnings;
-
-use base 'Mojolicious::Controller';
+use Mojo::Base 'Mojolicious::Controller';
 use Mail::Sendmail qw(sendmail %mailcfg);
 use MyIMDB::Models::Users;
 use MyIMDB::Models::Movies;

@@ -1,9 +1,5 @@
 package MyIMDB::Admins;
-
-use strict;
-use warnings;
-
-use base 'Mojolicious::Controller';
+use Mojo::Base 'Mojolicious::Controller';
 use Mojo::ByteStream 'b';
 use MyIMDB::Models::Admins;
 use MyIMDB::Models::Users;
