@@ -24,7 +24,6 @@ MyIMDB.db
 MyIMDB.sql
 public/css/styles.css
 public/index.html
-public/sorttable.js
 README.md
 script/my_imdb
 t/000_configuration.t
