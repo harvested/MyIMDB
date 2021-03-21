@@ -1,0 +1,12 @@
+You've searched in <i>actors</i> for: <%= t i => $$search_query || 'no query specified' %></br>
+
+<table border="1">
+	<th>Name</th>
+	<th>Birth Date</th>
+	% foreach my $actor (@$search_result) {
+		<tr>
+			<td><%= link_to url_for( "$actor->{first_name} ". "$actor->{last_name}")->url_unescape => "/actors/$actor->{'first_name'}" %></td>
+			<td><%= $actor->{date_of_birth} %></td>
+		</tr>
+	% }
+</table>

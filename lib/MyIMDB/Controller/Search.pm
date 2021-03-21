@@ -22,7 +22,7 @@ sub search {
     my $result = $self->$method($search_query);    
 
 	$self->render( 
-		search_query => \$search_query,
+		search_query => $search_query,
 		search_type => $search_type,
 		search_result => $result,
 	);

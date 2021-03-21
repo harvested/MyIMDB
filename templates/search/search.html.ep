@@ -3,21 +3,24 @@
 
 <h2>Search</h2>
 
-% if( $search_type =~ /actors/ ){
-	You've searched in <i>actors</i> for: <%= t i => $$search_query || 'no query specified' %></br>
+You've searched in <i><%= $search_type %></i> for: <i><%= $search_query %></i></br>
 
-	<table border="1">
-		<th>Name</th>
-		<th>Birth Date</th>
-		% foreach my $actor (@$search_result) {
-			<tr>
-				<td><%= link_to url_for( "$actor->{first_name} ". "$actor->{last_name}")->url_unescape => "/actors/$actor->{'first_name'}" %></td>
-				<td><%= $actor->{date_of_birth} %></td>
-			</tr>
-		% }
-		</table>
+% if( $search_type =~ /actors/ ){
+%#	%= include 'search/_actors', search_result => $search_result
+
+<table border="1">
+	<th>Name</th>
+	<th>Birth Date</th>
+	% foreach my $actor (@$search_result) {
+		<tr>
+			<td><a href="/actor/<%= $actor->actor_id() %>"><%= $actor->first_name() ." ". $actor->last_name()%></a>
+			<td><%= $actor->date_of_birth() %></td>
+		</tr>
+	% }
+</table>
+
+
 % } elsif( $search_type =~ /movies/ ){
-	You've searched in <i>movies</i> for: <%= t i => $$search_query || 'no query specified' %></br>  
 
 	<table border="1">
 		<th>Name</th>
@@ -33,7 +36,6 @@
 	</table>
 
 % } elsif( $search_type =~ /genres/ ){
-	You've searchd in <i>genres</i> for <%= t i=> $$search_query || 'no query specified' %></br>
 	We've found the matching genre(s):
 	%# TODO: delete this
 	% my $genres;
