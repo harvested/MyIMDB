@@ -1,13 +1,14 @@
 package MyIMDB::Models::UsersMovies;
+use Mojo::Base -strict;
+use parent 'MyIMDB::Models::Object';
 
-use strict;
-use warnings;
+__PACKAGE__->meta->setup(
+    table      => 'users_movies',
+    columns    => ['user_id', 'movie_id', 'rated', 'favorited'],
+    pk_columns => ['user_id', 'movie_id'],
+);
 
-use base 'MyIMDB::Models::Base';
-
-__PACKAGE__->set_up_table('users_movies');
-
-__PACKAGE__->has_a( user_id => 'MyIMDB::Models::Users');
-__PACKAGE__->has_a( movie_id => 'MyIMDB::Models::Movies');
+# __PACKAGE__->has_a( user_id => 'MyIMDB::Models::Users');
+# __PACKAGE__->has_a( movie_id => 'MyIMDB::Models::Movies');
 
 1;
