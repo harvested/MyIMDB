@@ -38,13 +38,17 @@
 % } elsif( $search_type =~ /genres/ ){
 	You've searchd in <i>genres</i> for <%= t i=> $$search_query || 'no query specified' %></br>
 	We've found the matching genre(s):
+	%# TODO: delete this
+	% my $genres;
 	<ul>
-	% foreach( @$genres ){
+	% foreach(@$genres ){
 		<li><%= $_->genre %></li>
 	% }
 	</ul>
 	
 	We've found the following movie(s):
+	%# TODO: delete this
+	% my $movies;
 	<ul>
 	% foreach( @$movies ){
 		<li><%= link_to url_for($_->name)->url_unescape => "/movies/$_" %></li>

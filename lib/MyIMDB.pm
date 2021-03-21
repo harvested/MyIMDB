@@ -14,7 +14,7 @@ sub startup {
 
     $r->get('/' => sub { shift->redirect_to('search') });
 
-    # MyIMDB::Search controller routes
+    # MyIMDB::Controller::Search controller routes
     my $search = $r->get('/search')->to(controller => 'search');
     $search->get('/')->to(action => 'home');
     $search->get('/:type/:query' => [type => ['actors', 'movies', 'genres']])
@@ -32,7 +32,7 @@ sub startup {
     $r->get('/join')->to(template => 'user/create_user');
     $r->post('/join')->to('user#create_user');
     
-    # MyIMDB::Actor controller routes
+    # MyIMDB::Controller::Actor controller routes
     my $actor = $r->get('/actor/')
                   ->to(controller => 'actor');
     $actor->get('/<id:num>')
@@ -46,7 +46,7 @@ sub startup {
           ->post('/mark')
           ->to('actors#markFavorite');
 
-    # MyIMDB::Movies routes
+    # MyIMDB::Controller::Movies routes
     my $movie = $r->get('/movie/<id:num>')
                   ->to(controller => 'movie');
     $movie->get('/')

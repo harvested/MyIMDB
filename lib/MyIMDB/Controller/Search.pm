@@ -1,4 +1,4 @@
-package MyIMDB::Search;
+package MyIMDB::Controller::Search;
 use Mojo::Base 'Mojolicious::Controller';
 use MyIMDB::Models::Actor;
 use MyIMDB::Models::Movie;
@@ -20,17 +20,11 @@ sub search {
 
     my $method = $SEARCH_METHODS->{$search_type};
     my $result = $self->$method($search_query);    
-	
-    my $search_result;
-    my @search_result;
-    my (@movies, @genres);
 
 	$self->render( 
 		search_query => \$search_query,
 		search_type => $search_type,
 		search_result => $result,
-		movies => \@movies,
-		genres => \@genres,
 	);
 }
 
