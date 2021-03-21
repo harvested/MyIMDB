@@ -32,13 +32,22 @@
          "file" : "lib/MyIMDB.pm"
       },
       "MyIMDB::Actor" : {
-         "file" : "lib/MyIMDB/Actor.pm"
+         "file" : "lib/MyIMDB/Controller/Actor.pm"
       },
       "MyIMDB::Admins" : {
          "file" : "lib/MyIMDB/Admins.pm"
       },
       "MyIMDB::Basket" : {
          "file" : "lib/MyIMDB/Basket.pm"
+      },
+      "MyIMDB::Controller::Movie" : {
+         "file" : "lib/MyIMDB/Controller/Movie.pm"
+      },
+      "MyIMDB::Controller::Search" : {
+         "file" : "lib/MyIMDB/Controller/Search.pm"
+      },
+      "MyIMDB::Controller::User" : {
+         "file" : "lib/MyIMDB/Controller/User.pm"
       },
       "MyIMDB::Models::Actor" : {
          "file" : "lib/MyIMDB/Models/Actor.pm"
@@ -73,17 +82,8 @@
       "MyIMDB::Models::UsersMovies" : {
          "file" : "lib/MyIMDB/Models/UsersMovies.pm"
       },
-      "MyIMDB::Movie" : {
-         "file" : "lib/MyIMDB/Movie.pm"
-      },
       "MyIMDB::Movie::Manager" : {
          "file" : "lib/MyIMDB/Movie/Manager.pm"
-      },
-      "MyIMDB::Search" : {
-         "file" : "lib/MyIMDB/Search.pm"
-      },
-      "MyIMDB::User" : {
-         "file" : "lib/MyIMDB/User.pm"
       },
       "UserRoles" : {
          "file" : "lib/MyIMDB/Models/UserRoles.pm"

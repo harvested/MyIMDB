@@ -1,8 +1,10 @@
 Build.pl
 lib/MyIMDB.pm
-lib/MyIMDB/Actor.pm
 lib/MyIMDB/Admins.pm
 lib/MyIMDB/Basket.pm
+lib/MyIMDB/Controller/Actor.pm
+lib/MyIMDB/Controller/Search.pm
+lib/MyIMDB/Controller/User.pm
 lib/MyIMDB/Models/Actor.pm
 lib/MyIMDB/Models/Base.pm
 lib/MyIMDB/Models/Genres.pm
@@ -15,10 +17,8 @@ lib/MyIMDB/Models/UserRoleTypes.pm
 lib/MyIMDB/Models/User.pm
 lib/MyIMDB/Models/UsersActors.pm
 lib/MyIMDB/Models/UsersMovies.pm
-lib/MyIMDB/Movie.pm
+lib/MyIMDB/Controller/Movie.pm
 lib/MyIMDB/Movie/Manager.pm
-lib/MyIMDB/Search.pm
-lib/MyIMDB/User.pm
 MANIFEST			This list of files
 MyIMDB.db
 MyIMDB.sql
@@ -45,8 +45,8 @@ templates/layouts/home.html.ep
 templates/movie/details.html.ep
 templates/search/home.html.ep
 templates/search/search.html.ep
-templates/user/home.html.ep
-templates/user/create_account.html.ep
+templates/user/create_user.html.ep
 templates/user/login.html.ep
+templates/user/view_user.html.ep
 META.json
 META.yml
